@@ -10,7 +10,7 @@ class Object():
         self.speed = speed
 
     def show(self):
-        rectMode(CENTER)
+        fill(255,0,255)
         rect(self.x, self.y, self.w, self.h)
 
     def move(self):

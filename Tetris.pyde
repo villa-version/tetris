@@ -5,6 +5,7 @@ tetris = None
 
 def setup():
     size(1024,600)
+    rectMode(CENTER)
     global tetris
     tetris = FoundTetris()
 
@@ -14,9 +15,8 @@ def setup():
 def draw():
 
     tetris.run()
-    tetris.distance()
-
 
 def keyPressed():
-    tetris.pressed()
+    tetris.pressed_to_move_tetris_1()
+    tetris.pressed_to_move_tetris_2()
 #    tetris.turn_tetris()
