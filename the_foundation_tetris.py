@@ -11,7 +11,7 @@ class FoundTetris():
 
     def load_all(self):
 
-        self.random_spawn_tetris = int(random(1,2))
+        self.random_spawn_tetris = int(random(0,2))
 
         if self.random_spawn_tetris == 0:
             for i in range(0,5):
