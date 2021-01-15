@@ -1,4 +1,5 @@
 from rect_tetris import RectTetris
+from rect_in_size import RectForWindow
 
 class FoundTetris():
 
@@ -8,6 +9,10 @@ class FoundTetris():
     move_select = True
     back_tetris_save = []
     random_spawn_tetris = 0
+    fps = 0
+    list_for_rects = []
+    for _ in range(0,25):
+        list_for_rects.append([])
 
     def load_all(self):
 
@@ -26,6 +31,12 @@ class FoundTetris():
             for _ in range(0,len(self.tetris_2)):
                 self.tetris_save.insert(0,(RectTetris(0, 0, 0, 0, 0)))
 
+            w = width/self.tetris_2[0].w + 1
+            h = height/self.tetris_2[0].h
+            for y in range(0,h):
+                for x in range(0,w):
+                    self.list_for_rects[y].append(RectForWindow(0+self.tetris_2[0].w/2+self.tetris_2[0].w*x, 1+self.tetris_2[0].h/2+self.tetris_2[0].h*y, self.tetris_2[0].w, self.tetris_2[0].h, False, 0))
+
     def run(self):
         background(255,255,255)
 
@@ -36,7 +47,9 @@ class FoundTetris():
         self.distance_between_height_and_tetris_1()
         self.distance_between_height_and_tetris_2()
         self.walls_for_tetris_1()
-        self.get_true_on_rect()
+        self.show_fps()
+#        self.get_true_on_rect()
+#        self.delite_piece_of_tetris_save()
         #func section
 
         for object_tetris in self.tetris_1:
@@ -50,6 +63,16 @@ class FoundTetris():
 
 ###############################################################################################
 ###############################################################################################
+
+    def show_fps(self):
+#        self.fps = self.fps + 1
+#        self.update_value = 0
+#        fill(0,0,0)
+#        strokeWeight(5)
+#        if millis() - self.update_value >= 1000:
+#            self.update_value = self.update_value + 1000
+#        text(self.fps, width-55, height/2-250)
+#        strokeWeight(1)
 
     def distance_between_height_and_tetris_2(self):
         if len(self.tetris_2) != 0:
@@ -110,25 +133,14 @@ class FoundTetris():
         if len(self.tetris_1) != 0:
             w = width/self.tetris_1[0].w
             h = height/self.tetris_1[0].h
-            for x in range(0,w+25):
+            for x in range(0,w+1):
                 for y in range(0,h):
                     fill(255,255,255)
                     rect((0+self.tetris_1[0].w/2)+self.tetris_1[0].w*x, (1+self.tetris_1[0].h/2)+self.tetris_1[0].h*y, self.tetris_1[0].w, self.tetris_1[0].h)
         elif len(self.tetris_2) != 0:
-            w = width/self.tetris_2[0].w
-            h = height/self.tetris_2[0].h
-            for x in range(0,w+1):
-                for y in range(0,h):
-                    fill(255,255,255)
-                    x_for_list = 0+self.tetris_2[0].w/2+self.tetris_2[0].w*x
-                    list_for_x_y = []
-                    list_for_x.append(x_for_list)
-                    self.list_for_rect_x.append(list_for_x)
-
-                    y_for_list = 1+self.tetris_2[0].h/2+self.tetris_2[0].h*y
-                    list_for_y.append(y_for_list)
-                    self.list_for_rect_y.append(list_for_y)
-                    rect((0+self.tetris_2[0].w/2)+self.tetris_2[0].w*x, (1+self.tetris_2[0].h/2)+self.tetris_2[0].h*y, self.tetris_2[0].w, self.tetris_2[0].h)
+            for i in range(0,len(self.list_for_rects)):
+                for j in self.list_for_rects[i]:
+                    j.show()
 
 
     def pressed_to_move_tetris_1(self):
@@ -196,11 +208,15 @@ class FoundTetris():
 
 
     def get_true_on_rect(self):
-        for x in range(0,len(self.list_for_rect_x)):
-            for y in range(0,len(self.list_for_rect_y)):
-                for object_tetris_save in self.tetris_save:
-                    if object_tetris_save.x == self.list_for_rect_x[x] and object_tetris_save.y == self.list_for_rect_x[y]:
-                        self.get_true()
+        for i in range(0,len(self.list_for_rect)):
+            for j in range(0,len(self.tetris_save)):
+                if self.tetris_save[j].x == self.list_for_rect[i].x and self.tetris_save[j].y == self.list_for_rect[i].y:
+                    self.list_for_rect[i].bool = self.get_true()
+
+
+    def delite_piece_of_tetris_save(self):
+        pass
+
 
     def get_true(self):
         return True
