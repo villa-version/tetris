@@ -2,6 +2,7 @@ from the_foundation_tetris import FoundTetris
 
 tetris = None
 
+add_library("minim")
 
 def setup():
     size(1024,600)
@@ -9,7 +10,10 @@ def setup():
     global tetris
     tetris = FoundTetris()
 
-    tetris.load_all()
+    minim_music = Minim(this)
+    music_for_tetris = minim_music.loadFile('sound_for_tetris.wav')
+
+    tetris.load_all(music_for_tetris)
 
 
 def draw():
